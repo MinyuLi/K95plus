@@ -34,7 +34,7 @@ def model(theta, t):
 	#Caution. this method here to solve E is ugly. 
 	# If you want to process large amounts of Kepler data, 
 	# this method is not suitable and will make the calculation very slow.
-	# I have another approach to solve it, but I haven't copywight to share it.
+	# I have another approach to solve it, but I haven't copyright to share it.
 	E=[]
 	for x in t:
 		b=2*np.pi*(x-T0)/P
