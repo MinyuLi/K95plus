@@ -100,6 +100,7 @@ fig, ax = plt.subplots(1, 1, figsize=(8, 4))
 ax.scatter(phase, y, c="k", s=1, alpha=alpha)
 ax.scatter(phase+1., y, c="k", s=1, alpha=alpha)
 ax.set_ylabel("Normalized flux")
+ax.set_xlabel("Orbital phase")
 ax.set_xlim(0.0, 2.0)
 ax.set_ylim(ylim_low, ylim_high)
 
