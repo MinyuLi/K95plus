@@ -1,3 +1,10 @@
+'''
+ Plot the K95+ model fitted to the phase-folded light curve
+ Version: V1.0
+ Generated at: 2023-01-10
+ @author: Minyu Li
+'''
+
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
