@@ -5,3 +5,4 @@ If you want to use other light curves, you could download it from http://keplerE
 
 The fit results plots and corner plots of all 153 HBSs can be downloaded from:  
 https://doi.org/10.12149/101208
+https://nadc.china-vo.org/res/r101208
