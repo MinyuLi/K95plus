@@ -2,7 +2,7 @@
  Plot the K95+ model fitted to the phase-folded light curve
  Version: V1.0
  Generated at: 2023-01-10
- @author: Minyu Li
+ @author: Minyu Li and Marcin Wrona
 '''
 
 import sys
@@ -14,40 +14,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 import lightkurve as lk
 
-# solve: x - a*sin(x) = b
-#Caution. this method is slowly, see comments in model function below. 
-def solve_x_asinx_b(a, b):
-	e = float(a)
-	Rst = float(b)
-	x_min = min(Rst - e, Rst + e)  # some times e is negative
-	x_max = max(Rst - e, Rst + e)
-	x = float
-	precision = 1.e-8  # precision can be set as required
-	while x_max > x_min:
-		x = (x_max + x_min) / 2
-		y = x - e * np.sin(x)
-		diff = y - Rst
-		if np.abs(diff) < precision:
-			return x
-		if diff > 0:
-			x_max = x
-		else:
-			x_min = x
-	return x
+PI = np.pi
+E_tab = np.linspace(0.,2.*PI,500)
+from scipy.interpolate import interp1d
+
 
 def model(theta, t):
 	P, e, i, omega, T0, S, C = theta
 
-	#Caution. this method here to solve E is ugly. 
-	# If you want to process large amounts of Kepler data, 
-	# this method is not suitable and will make the calculation very slow.
-	# I have another approach to solve it, but I haven't copyright to share it.
-	E=[]
-	for x in t:
-		b=2*np.pi*(x-T0)/P
-		E0 = solve_x_asinx_b(e, b)
-		E.append(E0)
-	E = np.array(E)
+	# This method is written by Marcin Wrona.
+	# Thank him for sharing the code.
+	t_tab = (E_tab - e*np.sin(E_tab))/(2.*PI)
+	iterp = interp1d(t_tab,E_tab, kind='cubic')
+	time_phased = (t-T0+P/2.)%P / P
+	E = iterp((time_phased-0.5)-np.floor(time_phased-0.5))
 
 	i = np.deg2rad(i)
 	omega = np.deg2rad(omega)
